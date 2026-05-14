@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Achievements — FMC, RGIPT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --cream: #F7F4EF; --ink: #1A1714; --ink-muted: #5C564F; --ink-faint: #9E9890; --gold: #B8924A; --border: rgba(26,23,20,0.12); }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0.8rem 3rem; background: rgba(247,244,239,0.92); backdrop-filter: blur(14px); border-bottom: 0.5px solid var(--border); }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 0.6rem; }
+  .nav-logo img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+  .nav-back { font-size: 0.78rem; letter-spacing: 0.08em; color: var(--ink-muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-back:hover { color: var(--gold); }
+
+  .page-hero { min-height: 45vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 3rem 4rem; position: relative; overflow: hidden; }
+  .page-hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #1A1714 0%, #2E2620 100%); z-index: 0; }
+  .page-hero-line { position: absolute; top: 0; left: 50%; width: 0.5px; height: 100%; background: rgba(184,146,74,0.12); z-index: 1; }
+  .page-hero-content { position: relative; z-index: 2; max-width: 1060px; width: 100%; margin: 0 auto; }
+  .page-hero-tag { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem; }
+  .page-hero-tag::before { content: ''; width: 28px; height: 0.5px; background: var(--gold); }
+  .page-hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 7vw, 6rem); font-weight: 300; color: var(--cream); line-height: 0.95; letter-spacing: -0.02em; }
+  .page-hero-title em { font-style: italic; color: var(--gold); }
+
+  .achievements-section { padding: 5rem 3rem; max-width: 1060px; margin: 0 auto; }
+  .achievements-intro { font-size: 1rem; color: var(--ink-muted); line-height: 1.8; max-width: 560px; font-weight: 300; margin-bottom: 4rem; border-bottom: 0.5px solid var(--border); padding-bottom: 3rem; }
+
+  .achievement-notice { border: 0.5px solid var(--border); padding: 4rem 3rem; text-align: center; background: white; }
+  .achievement-notice-icon { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; color: var(--gold); opacity: 0.35; margin-bottom: 1.2rem; line-height: 1; }
+  .achievement-notice-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; margin-bottom: 0.8rem; }
+  .achievement-notice-desc { font-size: 0.9rem; color: var(--ink-muted); line-height: 1.75; max-width: 440px; margin: 0 auto; }
+
+  .achievement-howto { margin-top: 3rem; padding: 2rem; border: 0.5px solid var(--border); }
+  .achievement-howto-title { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .achievement-howto-text { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.7; }
+  .achievement-howto-example { margin-top: 1.5rem; padding: 1.5rem; background: rgba(26,23,20,0.03); border: 0.5px solid var(--border); }
+  .eg-year { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--gold); margin-bottom: 1rem; }
+  .eg-item { display: flex; justify-content: space-between; align-items: baseline; padding: 0.6rem 0; border-bottom: 0.5px solid var(--border); font-size: 0.85rem; }
+  .eg-item:last-child { border-bottom: none; }
+  .eg-title { color: var(--ink); font-weight: 500; }
+  .eg-detail { color: var(--ink-muted); font-size: 0.78rem; }
+
+  footer { border-top: 0.5px solid var(--border); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: var(--ink-faint); letter-spacing: 0.04em; margin-top: 5rem; }
+  footer a { color: var(--ink-faint); text-decoration: none; transition: color 0.2s; }
+  footer a:hover { color: var(--gold); }
+
+  @media (max-width: 768px) {
+    nav, .page-hero, .achievements-section { padding-left: 1.5rem; padding-right: 1.5rem; }
+    footer { flex-direction: column; gap: 0.6rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="fmc-logo.png" alt="FMC Logo">
+    FMC · RGIPT
+  </a>
+  <a class="nav-back" href="index.html">← Back to Home</a>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-line"></div>
+  <div class="page-hero-content">
+    <p class="page-hero-tag">Film &amp; Media Club, RGIPT</p>
+    <h1 class="page-hero-title">Our<br><em>Achievements</em></h1>
+  </div>
+</section>
+
+<div class="achievements-section">
+  <p class="achievements-intro">Recognition earned by FMC members and the club at inter-college competitions, film festivals, and cultural events across India.</p>
+
+  <div class="achievement-notice">
+    <div class="achievement-notice-icon">✦</div>
+    <p class="achievement-notice-title">Achievements Coming Soon</p>
+    <p class="achievement-notice-desc">This page is ready for your club's milestones. Add awards, competition results, and recognitions by editing the HTML below the how-to guide.</p>
+  </div>
+
+  <div class="achievement-howto">
+    <p class="achievement-howto-title">How to add achievements</p>
+    <p class="achievement-howto-text">Delete the notice above and paste entries like the example below. Group them by year. Each entry shows the achievement title and detail (event name, position, year).</p>
+    <div class="achievement-howto-example">
+      <p class="eg-year">2024–25</p>
+      <div class="eg-item">
+        <span class="eg-title">Best Short Film</span>
+        <span class="eg-detail">Cinefest IIT Kanpur · 1st Place</span>
+      </div>
+      <div class="eg-item">
+        <span class="eg-title">Best Cinematography</span>
+        <span class="eg-detail">Kaltarang, RGIPT · 1st Place</span>
+      </div>
+      <div class="eg-item">
+        <span class="eg-title">Photography Contest</span>
+        <span class="eg-detail">Energia, RGIPT · 2nd Place</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span>© 2025 Film &amp; Media Club — RGIPT, Jais, Amethi</span>
+  <a href="index.html">← Back to Home</a>
+</footer>
+
+</body>
+</html>

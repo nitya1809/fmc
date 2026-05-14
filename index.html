@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FMC — Film & Media Club, RGIPT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #F7F4EF; --ink: #1A1714; --ink-muted: #5C564F; --ink-faint: #9E9890;
+    --gold: #B8924A; --gold-light: #E8D8BB; --border: rgba(26,23,20,0.12);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.8rem 3rem;
+    background: rgba(247,244,239,0.92); backdrop-filter: blur(14px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 0.6rem; }
+  .nav-logo img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+  .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+  .nav-links a { font-size: 0.75rem; letter-spacing: 0.08em; color: var(--ink-muted); text-decoration: none; text-transform: uppercase; font-weight: 400; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 3rem 5rem; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #1A1714 0%, #2E2620 60%, #1A1714 100%); z-index: 0; }
+  .hero-line { position: absolute; top: 0; left: 50%; width: 0.5px; height: 100%; background: rgba(184,146,74,0.15); z-index: 2; }
+  .hero-logo-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; opacity: 0.07; width: 420px; height: 420px; border-radius: 50%; object-fit: cover; }
+  .hero-content { position: relative; z-index: 3; max-width: 1060px; width: 100%; margin: 0 auto; }
+  .hero-tag { font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; font-weight: 400; display: flex; align-items: center; gap: 1rem; }
+  .hero-tag::before { content: ''; width: 32px; height: 0.5px; background: var(--gold); display: inline-block; }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(4rem, 8vw, 8rem); font-weight: 300; line-height: 0.95; color: var(--cream); letter-spacing: -0.02em; margin-bottom: 2.5rem; }
+  .hero-title em { font-style: italic; color: var(--gold); }
+  .hero-bottom { display: flex; align-items: flex-end; justify-content: space-between; border-top: 0.5px solid rgba(247,244,239,0.1); padding-top: 2rem; gap: 2rem; }
+  .hero-desc { font-size: 0.95rem; color: rgba(247,244,239,0.55); line-height: 1.8; max-width: 420px; font-weight: 300; }
+  .hero-stats { display: flex; gap: 3rem; }
+  .hero-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; color: var(--cream); line-height: 1; }
+  .hero-stat-label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(247,244,239,0.35); margin-top: 0.3rem; }
+  .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(247,244,239,0.3); text-decoration: none; }
+  .scroll-hint::after { content: ''; width: 0.5px; height: 40px; background: rgba(184,146,74,0.4); animation: scrollpulse 2s ease-in-out infinite; }
+  @keyframes scrollpulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+  .section { padding: 6rem 3rem; border-top: 0.5px solid var(--border); }
+  .section-inner { max-width: 1060px; margin: 0 auto; }
+  .section-tag { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
+  .section-tag::before { content: ''; width: 24px; height: 0.5px; background: var(--gold); }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 300; margin-bottom: 1.5rem; line-height: 1.1; }
+  .section-body { font-size: 1rem; color: var(--ink-muted); line-height: 1.85; max-width: 600px; font-weight: 300; }
+
+  .about-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 5rem; align-items: start; margin-top: 3.5rem; }
+  .about-features { display: flex; flex-direction: column; }
+  .feature { padding: 1.6rem 0; border-top: 0.5px solid var(--border); display: grid; grid-template-columns: 2.5rem 1fr; gap: 1rem; align-items: start; }
+  .feature:last-child { border-bottom: 0.5px solid var(--border); }
+  .feature-clickable { cursor: pointer; }
+  .feature-clickable:hover .feature-title { color: var(--gold); }
+  .feature-num { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; color: var(--gold); letter-spacing: 0.1em; padding-top: 0.1rem; }
+  .feature-title { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.35rem; transition: color 0.2s; }
+  .feature-desc { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.7; }
+  .feature-click-hint { font-size: 0.68rem; letter-spacing: 0.08em; color: var(--gold); margin-top: 0.5rem; opacity: 0.8; }
+
+  .activities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 3.5rem; border: 0.5px solid var(--border); }
+  .activity-card { padding: 2.5rem 2rem; border-right: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); }
+  .activity-card:nth-child(3n) { border-right: none; }
+  .activity-icon { font-size: 1.4rem; margin-bottom: 1.2rem; color: var(--gold); }
+  .activity-title { font-size: 1rem; font-weight: 500; margin-bottom: 0.6rem; }
+  .activity-desc { font-size: 0.84rem; color: var(--ink-muted); line-height: 1.7; }
+
+  .mustwatch-section { background: var(--ink); padding: 6rem 3rem; }
+  .mustwatch-inner { max-width: 1060px; margin: 0 auto; }
+  .mustwatch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+  .movie-card { position: relative; overflow: hidden; cursor: pointer; border: 0.5px solid rgba(247,244,239,0.08); transition: transform 0.3s, border-color 0.3s; }
+  .movie-card:hover { transform: translateY(-5px); border-color: var(--gold); }
+  .movie-poster { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; transition: filter 0.3s; }
+  .movie-card:hover .movie-poster { filter: brightness(1.08); }
+  .movie-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(26,23,20,0.96)); padding: 3rem 1.2rem 1.4rem; }
+  .movie-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; color: var(--cream); margin-bottom: 0.25rem; }
+  .movie-year { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--gold); }
+  .movie-badge { position: absolute; top: 1rem; right: 1rem; background: var(--gold); color: var(--ink); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.25rem 0.6rem; font-weight: 500; }
+  .poster-fallback { width: 100%; aspect-ratio: 2/3; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #2a2420; }
+  .poster-fallback-icon { font-size: 2.5rem; color: var(--gold); opacity: 0.3; margin-bottom: 1rem; }
+  .poster-fallback-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: rgba(247,244,239,0.6); text-align: center; padding: 0 1rem; line-height: 1.4; }
+
+  /* QUICK LINKS */
+  .quicklinks-section { padding: 5rem 3rem; background: white; border-top: 0.5px solid var(--border); }
+  .quicklinks-inner { max-width: 1060px; margin: 0 auto; }
+  .quicklinks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 3rem; border: 0.5px solid var(--border); }
+  .quicklink-card { padding: 3rem 2.5rem; border-right: 0.5px solid var(--border); text-decoration: none; display: flex; flex-direction: column; justify-content: space-between; min-height: 240px; transition: background 0.25s; }
+  .quicklink-card:last-child { border-right: none; }
+  .quicklink-card:hover { background: var(--ink); }
+  .quicklink-card:hover .ql-num, .quicklink-card:hover .ql-arrow { color: var(--gold); }
+  .quicklink-card:hover .ql-title { color: var(--cream); }
+  .quicklink-card:hover .ql-desc { color: rgba(247,244,239,0.5); }
+  .ql-num { font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; color: var(--gold); letter-spacing: 0.12em; margin-bottom: 1.5rem; transition: color 0.25s; }
+  .ql-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--ink); line-height: 1.1; margin-bottom: 0.8rem; transition: color 0.25s; }
+  .ql-desc { font-size: 0.82rem; color: var(--ink-muted); line-height: 1.6; margin-bottom: 1.5rem; transition: color 0.25s; }
+  .ql-arrow { font-size: 1.2rem; color: var(--gold); transition: color 0.25s; align-self: flex-end; }
+
+  /* POSITIONS */
+  .positions-section { background: #111; padding: 6rem 3rem; }
+  .positions-inner { max-width: 1060px; margin: 0 auto; }
+  .positions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 3rem; border: 0.5px solid rgba(247,244,239,0.08); }
+  .year-block { padding: 2rem 2rem 2.5rem; border-right: 0.5px solid rgba(247,244,239,0.08); border-bottom: 0.5px solid rgba(247,244,239,0.08); }
+  .year-block:nth-child(3n) { border-right: none; }
+  .year-label { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; color: var(--gold); margin-bottom: 0.3rem; line-height: 1; }
+  .year-sublabel { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(247,244,239,0.25); margin-bottom: 1.6rem; }
+  .position-entry { padding: 0.7rem 0; border-bottom: 0.5px solid rgba(247,244,239,0.06); display: flex; flex-direction: column; gap: 0.2rem; }
+  .position-entry:last-child { border-bottom: none; padding-bottom: 0; }
+  .position-role { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); opacity: 0.7; }
+  .position-name { font-size: 0.92rem; color: rgba(247,244,239,0.85); font-weight: 400; }
+  .current-badge { display: inline-block; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; background: var(--gold); color: var(--ink); padding: 0.15rem 0.5rem; font-weight: 600; margin-left: 0.5rem; vertical-align: middle; }
+
+  /* CONTACT */
+  .contact-section { background: var(--ink); padding: 5rem 3rem; border-top: 0.5px solid rgba(247,244,239,0.06); }
+  .contact-inner { max-width: 1060px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 3rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 0; align-items: flex-end; }
+  .contact-link { font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(247,244,239,0.6); text-decoration: none; display: flex; align-items: center; gap: 0.75rem; transition: color 0.2s; border-bottom: 0.5px solid rgba(247,244,239,0.08); padding: 1rem 0; }
+  .contact-link:first-child { padding-top: 0; }
+  .contact-link:last-child { border-bottom: none; padding-bottom: 0; }
+  .contact-link:hover { color: var(--gold); }
+
+  footer { border-top: 0.5px solid var(--border); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; font-size: 0.75rem; color: var(--ink-faint); letter-spacing: 0.04em; }
+  footer a { color: var(--ink-faint); text-decoration: none; transition: color 0.2s; }
+  footer a:hover { color: var(--gold); }
+
+  /* MODALS */
+  .modal-overlay { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(10,8,6,0.93); backdrop-filter: blur(10px); align-items: center; justify-content: center; padding: 2rem; }
+  .modal-overlay.open { display: flex; }
+  .modal-base { background: #1e1a17; border: 0.5px solid rgba(247,244,239,0.1); width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
+  .modal-header { padding: 2rem 2.5rem 1.5rem; border-bottom: 0.5px solid rgba(247,244,239,0.08); display: flex; justify-content: space-between; align-items: flex-start; position: sticky; top: 0; background: #1e1a17; z-index: 10; }
+  .modal-eyebrow { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+  .modal-h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 300; color: var(--cream); }
+  .modal-close { background: none; border: 0.5px solid rgba(247,244,239,0.15); color: rgba(247,244,239,0.5); cursor: pointer; font-size: 1rem; padding: 0.5rem 0.7rem; transition: all 0.2s; }
+  .modal-close:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Screening list modal */
+  .screen-modal { max-width: 860px; }
+  .screen-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; padding: 2rem 2.5rem; }
+  .screen-card { border: 0.5px solid rgba(247,244,239,0.08); overflow: hidden; cursor: pointer; transition: border-color 0.2s; position: relative; }
+  .screen-card:hover { border-color: var(--gold); }
+  .screen-poster { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; }
+  .screen-info { padding: 1rem; background: rgba(247,244,239,0.03); }
+  .screen-movie-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--cream); margin-bottom: 0.2rem; }
+  .screen-meta { font-size: 0.7rem; color: var(--gold); opacity: 0.8; letter-spacing: 0.06em; }
+  .screen-tag { position: absolute; top: 0.8rem; left: 0.8rem; background: var(--gold); color: var(--ink); font-size: 0.56rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.5rem; font-weight: 500; }
+
+  /* Movie detail modal */
+  .movie-modal { max-width: 700px; }
+  .movie-detail { display: grid; grid-template-columns: 200px 1fr; }
+  .movie-detail-poster { width: 100%; aspect-ratio: 2/3; object-fit: cover; }
+  .movie-detail-info { padding: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+  .movie-detail-title { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; color: var(--cream); font-weight: 300; line-height: 1.1; }
+  .movie-detail-meta { font-size: 0.72rem; letter-spacing: 0.1em; color: var(--gold); text-transform: uppercase; }
+  .movie-detail-desc { font-size: 0.88rem; color: rgba(247,244,239,0.6); line-height: 1.7; }
+  .movie-why-label { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(247,244,239,0.3); margin-bottom: 0.4rem; }
+  .movie-why-text { font-size: 0.85rem; color: rgba(247,244,239,0.5); line-height: 1.65; font-style: italic; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 1.5rem 4rem; }
+    .section, .mustwatch-section, .positions-section, .contact-section, .quicklinks-section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .activities-grid { grid-template-columns: 1fr 1fr; }
+    .quicklinks-grid { grid-template-columns: 1fr; }
+    .quicklink-card { border-right: none; border-bottom: 0.5px solid var(--border); }
+    .mustwatch-grid, .screen-grid { grid-template-columns: 1fr 1fr; }
+    .contact-inner { flex-direction: column; align-items: flex-start; }
+    .contact-links { align-items: flex-start; }
+    footer { flex-direction: column; gap: 0.6rem; text-align: center; }
+    .positions-grid { grid-template-columns: 1fr 1fr; }
+    .year-block:nth-child(3n) { border-right: 0.5px solid rgba(247,244,239,0.08); }
+    .year-block:nth-child(2n) { border-right: none; }
+    .movie-detail { grid-template-columns: 1fr; }
+    .movie-detail-poster { aspect-ratio: 16/9; object-position: top; }
+  }
+  @media (max-width: 600px) {
+    .hero-title { font-size: clamp(3rem, 12vw, 5rem); }
+    .hero-bottom { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+    .mustwatch-grid, .screen-grid, .activities-grid { grid-template-columns: 1fr; }
+    .positions-grid { grid-template-columns: 1fr; }
+    .year-block { border-right: none !important; }
+    .modal-header { padding: 1.5rem; }
+    .screen-grid { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="fmc-logo.png" alt="FMC Logo">
+    FMC · RGIPT
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#what-we-do">Activities</a></li>
+    <li><a href="#must-watch">Must Watch</a></li>
+    <li><a href="#positions">Leadership</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="events.html">Events</a></li>
+    <li><a href="achievements.html">Achievements</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
+  <img class="hero-logo-bg" src="fmc-logo.png" alt="">
+  <div class="hero-content">
+    <p class="hero-tag">Rajiv Gandhi Institute of Petroleum Technology, Jais</p>
+    <h1 class="hero-title">Film &amp;<br><em>Media</em><br>Club</h1>
+    <div class="hero-bottom">
+      <p class="hero-desc">A creative collective for storytellers, cinematographers, editors, and film lovers at RGIPT. We make, screen, and celebrate the art of cinema.</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">FMC</div>
+          <div class="hero-stat-label">Est. RGIPT</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">&#8734;</div>
+          <div class="hero-stat-label">Stories Told</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="scroll-hint" href="#about">scroll</a>
+</section>
+
+<section class="section" id="about">
+  <div class="section-inner">
+    <p class="section-tag">Who We Are</p>
+    <h2 class="section-title">Cinema is our<br>common language</h2>
+    <div class="about-grid">
+      <div>
+        <p class="section-body">The Film &amp; Media Club at RGIPT is a space where students explore the art and craft of visual storytelling. Born out of a shared love for cinema, we bring together engineers, managers, and thinkers who believe every story deserves to be told well.</p>
+        <p class="section-body" style="margin-top:1.2rem">Located in Jais, Amethi — one of India's premier petroleum and energy institutes — FMC is proof that technical minds carry creative souls. Whether you're behind the camera, in the edit suite, or simply a passionate film watcher, there is a place for you here.</p>
+        <p class="section-body" style="margin-top:1.2rem">Our members have participated in national inter-college film festivals, produced short films and documentaries, and contributed to the visual identity of RGIPT's cultural fests and events.</p>
+      </div>
+      <div class="about-features">
+        <div class="feature feature-clickable" onclick="openScreeningModal()">
+          <span class="feature-num">01</span>
+          <div>
+            <p class="feature-title">Film Screenings</p>
+            <p class="feature-desc">Curated screenings of world cinema, Indian parallel cinema, and student productions — followed by open discussions.</p>
+            <p class="feature-click-hint">↗ View screened films</p>
+          </div>
+        </div>
+        <div class="feature">
+          <span class="feature-num">02</span>
+          <div>
+            <p class="feature-title">Production Workshops</p>
+            <p class="feature-desc">Hands-on sessions covering cinematography, direction, sound design, and post-production using professional tools.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <span class="feature-num">03</span>
+          <div>
+            <p class="feature-title">Short Film Projects</p>
+            <p class="feature-desc">Collaborative productions from script to final cut — every member works in a real crew.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <span class="feature-num">04</span>
+          <div>
+            <p class="feature-title">Festival Participation</p>
+            <p class="feature-desc">We submit films to national inter-college competitions and represent RGIPT on prominent platforms.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="what-we-do" style="background:white;">
+  <div class="section-inner">
+    <p class="section-tag">What We Do</p>
+    <h2 class="section-title">Every frame, a story</h2>
+    <div class="activities-grid">
+      <div class="activity-card"><div class="activity-icon">✦</div><p class="activity-title">Direction &amp; Storytelling</p><p class="activity-desc">From concept to screenplay, we nurture directorial vision and narrative craft through guided projects.</p></div>
+      <div class="activity-card"><div class="activity-icon">◎</div><p class="activity-title">Cinematography</p><p class="activity-desc">Composition, lighting, and camera movement — we teach the visual language of film with hands-on shooting sessions.</p></div>
+      <div class="activity-card"><div class="activity-icon">▣</div><p class="activity-title">Editing &amp; Post-Production</p><p class="activity-desc">Colour grading, sound mixing, VFX basics — members shape raw footage into finished cinematic work.</p></div>
+      <div class="activity-card"><div class="activity-icon">◈</div><p class="activity-title">Documentary Filmmaking</p><p class="activity-desc">We document campus life and untold stories — giving members real-world journalistic and cinematic experience.</p></div>
+      <div class="activity-card"><div class="activity-icon">◉</div><p class="activity-title">Photography</p><p class="activity-desc">Still photography is at the heart of visual literacy. We cover events, conduct photowalks, and run critique sessions.</p></div>
+      <div class="activity-card"><div class="activity-icon">◇</div><p class="activity-title">Film Appreciation</p><p class="activity-desc">Weekly screenings and discussions on cinema history, theory, and criticism — building a deeper understanding of the medium.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="mustwatch-section" id="must-watch">
+  <div class="mustwatch-inner">
+    <p class="section-tag" style="color:var(--gold)">Curated by FMC</p>
+    <h2 class="section-title" style="color:var(--cream)">Must-watch films</h2>
+    <div class="mustwatch-grid">
+      <div class="movie-card" onclick="openMovieModal(0)">
+        <span class="movie-badge">Must Watch</span>
+        <img class="movie-poster" src="https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg" alt="The Shawshank Redemption" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="poster-fallback" style="display:none"><div class="poster-fallback-icon">◎</div><div class="poster-fallback-title">The Shawshank Redemption</div></div>
+        <div class="movie-overlay"><p class="movie-title">The Shawshank Redemption</p><p class="movie-year">1994 · Frank Darabont</p></div>
+      </div>
+      <div class="movie-card" onclick="openMovieModal(1)">
+        <span class="movie-badge">Must Watch</span>
+        <img class="movie-poster" src="https://image.tmdb.org/t/p/w500/bSqt9rhDZx1Q7UZ86dBPd3oMGQh.jpg" alt="Good Will Hunting" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="poster-fallback" style="display:none"><div class="poster-fallback-icon">◎</div><div class="poster-fallback-title">Good Will Hunting</div></div>
+        <div class="movie-overlay"><p class="movie-title">Good Will Hunting</p><p class="movie-year">1997 · Gus Van Sant</p></div>
+      </div>
+      <div class="movie-card" onclick="openMovieModal(2)">
+        <span class="movie-badge">Must Watch</span>
+        <img class="movie-poster" src="https://image.tmdb.org/t/p/w500/7fn624j5lj3xTme2SgiLCeuedmO.jpg" alt="Whiplash" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="poster-fallback" style="display:none"><div class="poster-fallback-icon">◎</div><div class="poster-fallback-title">Whiplash</div></div>
+        <div class="movie-overlay"><p class="movie-title">Whiplash</p><p class="movie-year">2014 · Damien Chazelle</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK LINKS -->
+<section class="quicklinks-section">
+  <div class="quicklinks-inner">
+    <p class="section-tag">Explore More</p>
+    <h2 class="section-title">Beyond this page</h2>
+    <div class="quicklinks-grid">
+      <a class="quicklink-card" href="gallery.html">
+        <div><p class="ql-num">01</p><p class="ql-title">Gallery</p><p class="ql-desc">Stills, behind-the-scenes, event photography and visual memories from FMC productions and screenings.</p></div>
+        <span class="ql-arrow">↗</span>
+      </a>
+      <a class="quicklink-card" href="events.html">
+        <div><p class="ql-num">02</p><p class="ql-title">Upcoming Events</p><p class="ql-desc">Astrophotography nights, screening sessions, workshops and more — see what's happening at FMC.</p></div>
+        <span class="ql-arrow">↗</span>
+      </a>
+      <a class="quicklink-card" href="achievements.html">
+        <div><p class="ql-num">03</p><p class="ql-title">Achievements</p><p class="ql-desc">Awards, recognitions, and milestones earned by FMC members at inter-college competitions and beyond.</p></div>
+        <span class="ql-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="positions-section" id="positions">
+  <div class="positions-inner">
+    <p class="section-tag" style="color:var(--gold)">Leadership</p>
+    <h2 class="section-title" style="color:var(--cream)">Those who led the frame</h2>
+    <div class="positions-grid">
+      <div class="year-block">
+        <div class="year-label">2026–27</div>
+        <div class="year-sublabel">Current Office Bearers</div>
+        <div class="position-entry"><span class="position-role">Head</span><span class="position-name">Kshitiz Anant <span class="current-badge">Current</span></span></div>
+        <div class="position-entry"><span class="position-role">Co-Head</span><span class="position-name">Nitya Jain <span class="current-badge">Current</span></span></div>
+      </div>
+      <div class="year-block">
+        <div class="year-label">2025–26</div>
+        <div class="year-sublabel">Previous Term</div>
+        <div class="position-entry"><span class="position-role">Head</span><span class="position-name">Anshuman Tanwar</span></div>
+        <div class="position-entry"><span class="position-role">Co-Head</span><span class="position-name">Kshitiz Anant</span></div>
+      </div>
+      <div class="year-block">
+        <div class="year-label">2024–25</div>
+        <div class="year-sublabel">Previous Term</div>
+        <div class="position-entry"><span class="position-role">Co-Head</span><span class="position-name">Runav Agarwal</span></div>
+      </div>
+      <div class="year-block">
+        <div class="year-label">2023–24</div>
+        <div class="year-sublabel">Previous Term</div>
+        <div class="position-entry"><span class="position-role">Head</span><span class="position-name">—</span></div>
+        <div class="position-entry"><span class="position-role">Co-Head</span><span class="position-name">—</span></div>
+      </div>
+      <div class="year-block">
+        <div class="year-label">2022–23</div>
+        <div class="year-sublabel">Previous Term</div>
+        <div class="position-entry"><span class="position-role">Head</span><span class="position-name">—</span></div>
+        <div class="position-entry"><span class="position-role">Co-Head</span><span class="position-name">—</span></div>
+      </div>
+      <div class="year-block">
+        <div class="year-label">2021–22</div>
+        <div class="year-sublabel">Previous Term</div>
+        <div class="position-entry"><span class="position-role">Head</span><span class="position-name">—</span></div>
+        <div class="position-entry"><span class="position-role">Co-Head</span><span class="position-name">—</span></div>
+      </div>
+    </div>
+    <p style="font-size:0.72rem;color:rgba(247,244,239,0.18);margin-top:1.5rem;letter-spacing:0.06em;">* Replace dashes with actual names for earlier terms.</p>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div>
+      <p class="section-tag" style="color:var(--gold)">Get In Touch</p>
+      <h2 class="section-title" style="color:var(--cream)">Find us at RGIPT</h2>
+      <p class="section-body" style="color:rgba(247,244,239,0.5);max-width:380px">Jais, Amethi, Uttar Pradesh — 229304.<br>Reach out to collaborate, contribute, or just talk cinema.</p>
+    </div>
+    <div class="contact-links">
+      <a class="contact-link" href="https://www.instagram.com/fmcrgipt?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">Instagram ↗</a>
+      <a class="contact-link" href="https://www.youtube.com/@fmcrgipt" target="_blank">YouTube ↗</a>
+      <a class="contact-link" href="mailto:fmc@rgipt.ac.in">fmc@rgipt.ac.in ↗</a>
+      <a class="contact-link" href="https://rgipt.ac.in" target="_blank">rgipt.ac.in ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Film &amp; Media Club — RGIPT, Jais, Amethi</span>
+  <span style="display:flex;gap:1.5rem">
+    <a href="https://www.instagram.com/fmcrgipt?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">Instagram</a>
+    <a href="https://www.youtube.com/@fmcrgipt" target="_blank">YouTube</a>
+  </span>
+</footer>
+
+<!-- SCREENING LIST MODAL -->
+<div class="modal-overlay" id="screeningModal" onclick="handleOverlayClick(event,'screeningModal')">
+  <div class="modal-base screen-modal">
+    <div class="modal-header">
+      <div><p class="modal-eyebrow">FMC Screened Films</p><h2 class="modal-h2">Films We've Shown</h2></div>
+      <button class="modal-close" onclick="closeModal('screeningModal')">✕</button>
+    </div>
+    <div class="screen-grid">
+      <div class="screen-card" onclick="openMovieModal(0)">
+        <span class="screen-tag">Screened</span>
+        <img class="screen-poster" src="https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg" alt="Shawshank">
+        <div class="screen-info"><p class="screen-movie-title">The Shawshank Redemption</p><p class="screen-meta">1994 · Frank Darabont</p></div>
+      </div>
+      <div class="screen-card" onclick="openMovieModal(1)">
+        <span class="screen-tag">Screened</span>
+        <img class="screen-poster" src="https://image.tmdb.org/t/p/w500/bSqt9rhDZx1Q7UZ86dBPd3oMGQh.jpg" alt="Good Will Hunting">
+        <div class="screen-info"><p class="screen-movie-title">Good Will Hunting</p><p class="screen-meta">1997 · Gus Van Sant</p></div>
+      </div>
+      <div class="screen-card" onclick="openMovieModal(2)">
+        <span class="screen-tag">Screened</span>
+        <img class="screen-poster" src="https://image.tmdb.org/t/p/w500/7fn624j5lj3xTme2SgiLCeuedmO.jpg" alt="Whiplash">
+        <div class="screen-info"><p class="screen-movie-title">Whiplash</p><p class="screen-meta">2014 · Damien Chazelle</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INDIVIDUAL MOVIE MODAL -->
+<div class="modal-overlay" id="movieModal" onclick="handleOverlayClick(event,'movieModal')">
+  <div class="modal-base movie-modal">
+    <div class="modal-header">
+      <div><p class="modal-eyebrow">Must Watch</p><h2 class="modal-h2" id="movieModalTitle">—</h2></div>
+      <button class="modal-close" onclick="closeModal('movieModal')">✕</button>
+    </div>
+    <div class="movie-detail">
+      <img class="movie-detail-poster" id="movieModalPoster" src="" alt="">
+      <div class="movie-detail-info">
+        <p class="movie-detail-title" id="movieDetailTitle"></p>
+        <p class="movie-detail-meta" id="movieDetailMeta"></p>
+        <p class="movie-detail-desc" id="movieDetailDesc"></p>
+        <div>
+          <p class="movie-why-label">Why FMC recommends this</p>
+          <p class="movie-why-text" id="movieDetailWhy"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const movies = [
+    {
+      title: "The Shawshank Redemption",
+      meta: "1994 · Frank Darabont · Drama",
+      poster: "https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg",
+      desc: "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+      why: "A masterclass in patient storytelling. Every frame serves the narrative. It shows that cinema's true power lies not in spectacle, but in the quiet courage of its characters."
+    },
+    {
+      title: "Good Will Hunting",
+      meta: "1997 · Gus Van Sant · Drama",
+      poster: "https://image.tmdb.org/t/p/w500/bSqt9rhDZx1Q7UZ86dBPd3oMGQh.jpg",
+      desc: "A janitor at MIT with a genius-level intellect must choose between his potential and the comfort of his world.",
+      why: "An essential film about identity, potential, and the courage to accept help. The screenplay by Damon and Affleck is a model of character-driven writing."
+    },
+    {
+      title: "Whiplash",
+      meta: "2014 · Damien Chazelle · Drama",
+      poster: "https://image.tmdb.org/t/p/w500/7fn624j5lj3xTme2SgiLCeuedmO.jpg",
+      desc: "A young drummer enrolls at a prestigious music conservatory where he comes under the tutelage of a brutal instructor.",
+      why: "Chazelle's editing is a weapon. This film is about obsession and the cost of greatness — directly relevant to any creative pursuing excellence."
+    }
+  ];
+
+  function openMovieModal(idx) {
+    const m = movies[idx];
+    document.getElementById('movieModalTitle').textContent = m.title;
+    document.getElementById('movieDetailTitle').textContent = m.title;
+    document.getElementById('movieDetailMeta').textContent = m.meta;
+    document.getElementById('movieDetailDesc').textContent = m.desc;
+    document.getElementById('movieDetailWhy').textContent = m.why;
+    document.getElementById('movieModalPoster').src = m.poster;
+    closeModal('screeningModal');
+    openModal('movieModal');
+  }
+  function openScreeningModal() { openModal('screeningModal'); }
+  function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow = ''; }
+  function handleOverlayClick(e, id) { if (e.target === document.getElementById(id)) closeModal(id); }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal('movieModal'); closeModal('screeningModal'); } });
+</script>
+</body>
+</html>
