@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FMC Events</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+    }
+
+    body{
+      background:#0b0b0b;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    /* HERO SECTION */
+
+    .events-hero{
+      width:100%;
+      min-height:55vh;
+      background:
+      linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)),
+      url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2070&auto=format&fit=crop');
+      background-size:cover;
+      background-position:center;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:40px 20px;
+    }
+
+    .hero-content h1{
+      font-size:4rem;
+      color:#ffcc00;
+      letter-spacing:2px;
+      margin-bottom:15px;
+    }
+
+    .hero-content p{
+      max-width:700px;
+      color:#d6d6d6;
+      font-size:1.05rem;
+      line-height:1.8;
+      margin:auto;
+    }
+
+    /* EVENTS SECTION */
+
+    .events-section{
+      width:100%;
+      padding:80px 8%;
+      background:#111;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:60px;
+    }
+
+    .section-title h2{
+      font-size:2.8rem;
+      color:#ffcc00;
+      margin-bottom:10px;
+    }
+
+    .section-title p{
+      color:#aaa;
+    }
+
+    .events-container{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:30px;
+    }
+
+    .event-card{
+      background:#1a1a1a;
+      border-radius:20px;
+      overflow:hidden;
+      transition:0.4s ease;
+      border:1px solid rgba(255,255,255,0.08);
+      position:relative;
+    }
+
+    .event-card:hover{
+      transform:translateY(-10px);
+      box-shadow:0 15px 40px rgba(255,204,0,0.2);
+    }
+
+    .event-image{
+      height:230px;
+      overflow:hidden;
+    }
+
+    .event-image img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition:0.5s;
+    }
+
+    .event-card:hover img{
+      transform:scale(1.08);
+    }
+
+    .event-content{
+      padding:25px;
+    }
+
+    .event-tag{
+      display:inline-block;
+      background:#ffcc00;
+      color:black;
+      font-size:0.8rem;
+      font-weight:600;
+      padding:6px 14px;
+      border-radius:30px;
+      margin-bottom:15px;
+    }
+
+    .event-content h3{
+      font-size:1.4rem;
+      margin-bottom:15px;
+      color:white;
+    }
+
+    .event-content p{
+      color:#bbb;
+      line-height:1.8;
+      font-size:0.95rem;
+      margin-bottom:20px;
+    }
+
+    .event-info{
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:10px;
+      border-top:1px solid rgba(255,255,255,0.08);
+      padding-top:15px;
+    }
+
+    .event-info span{
+      color:#ffcc00;
+      font-size:0.9rem;
+      font-weight:500;
+    }
+
+    /* FOOTER */
+
+    .events-footer{
+      text-align:center;
+      padding:30px 20px;
+      background:#0a0a0a;
+      color:#777;
+      border-top:1px solid rgba(255,255,255,0.05);
+    }
+
+    /* RESPONSIVE */
+
+    @media(max-width:768px){
+
+      .hero-content h1{
+        font-size:2.7rem;
+      }
+
+      .section-title h2{
+        font-size:2.2rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+
+  <section class="events-hero">
+    <div class="hero-content">
+      <h1>FMC EVENTS</h1>
+      <p>
+        Explore the creative world of photography, filmmaking,
+        storytelling, workshops, competitions, and unforgettable
+        experiences organized by the Film & Media Club.
+      </p>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+
+  <section class="events-section">
+
+    <div class="section-title">
+      <h2>Upcoming Events</h2>
+      <p>Moments. Creativity. Experiences.</p>
+    </div>
+
+    <div class="events-container">
+
+      <!-- EVENT 1 -->
+
+      <div class="event-card">
+        <div class="event-image">
+          <img src="https://images.unsplash.com/photo-1502134249126-9f3755a50d78?q=80&w=2070&auto=format&fit=crop" alt="">
+        </div>
+
+        <div class="event-content">
+          <span class="event-tag">Photography</span>
+
+          <h3>Astrophotography Night</h3>
+
+          <p>
+            A night-time astrophotography session conducted at AB2 Terrace
+            under clear sky conditions around the Amethi-Raebareli region
+            to capture celestial beauty.
+          </p>
+
+          <div class="event-info">
+            <span>🌌 Single Night Event</span>
+            <span>📸 FMC Instagram Feature</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- EVENT 2 -->
+
+      <div class="event-card">
+        <div class="event-image">
+          <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=2070&auto=format&fit=crop" alt="">
+        </div>
+
+        <div class="event-content">
+          <span class="event-tag">Cinema</span>
+
+          <h3>Movie Screening Night</h3>
+
+          <p>
+            An outdoor movie screening organized behind D Block
+            to create a social and cinematic experience for students.
+          </p>
+
+          <div class="event-info">
+            <span>🎬 Single Evening Event</span>
+            <span>🌟 Official Feature</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- EVENT 3 -->
+
+      <div class="event-card">
+        <div class="event-image">
+          <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=2070&auto=format&fit=crop" alt="">
+        </div>
+
+        <div class="event-content">
+          <span class="event-tag">Workshop</span>
+
+          <h3>Camera Operation Workshop</h3>
+
+          <p>
+            A hands-on workshop covering camera basics, framing,
+            settings, practical photography skills, and creative shooting.
+          </p>
+
+          <div class="event-info">
+            <span>📷 Single Day Workshop</span>
+            <span>🏆 FMC Feature</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- EVENT 4 -->
+
+      <div class="event-card">
+        <div class="event-image">
+          <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2070&auto=format&fit=crop" alt="">
+        </div>
+
+        <div class="event-content">
+          <span class="event-tag">Fest Coverage</span>
+
+          <h3>Fest Photography Week</h3>
+
+          <p>
+            A week-long photography showcase during Energia,
+            Kaltarang, Urjotsav, and Gyanarpan capturing sports,
+            cultural, technical, and social moments.
+          </p>
+
+          <div class="event-info">
+            <span>📅 Week-long Event</span>
+            <span>📢 FMC & Cultural Feature</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- EVENT 5 -->
+
+      <div class="event-card">
+        <div class="event-image">
+          <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2070&auto=format&fit=crop" alt="">
+        </div>
+
+        <div class="event-content">
+          <span class="event-tag">Competition</span>
+
+          <h3>Advertisement Reel Competition</h3>
+
+          <p>
+            Participants create advertisement-style reels and
+            short cinematic videos. Winning reels will be featured
+            on FMC and cultural media pages.
+          </p>
+
+          <div class="event-info">
+            <span>🎥 Week-long Competition</span>
+            <span>🔥 Official Social Feature</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+
+  <footer class="events-footer">
+    © 2026 Film & Media Club | Designed for FMC
+  </footer>
+
+</body>
+</html>
